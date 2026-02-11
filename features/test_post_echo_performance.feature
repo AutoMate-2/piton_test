@@ -10,7 +10,7 @@ Feature: POST Echo Endpoint Performance Tests
   # ──────────────────────────────────────────────────────────
   # Scenario DQ-T13 — POST form data with performance check
   # ──────────────────────────────────────────────────────────
-  @performance @positive
+  @performance @positive 
   Scenario: Verify POST with form data returns 200 within time limit
     When I send a POST request to "/post" with form data:
       | key  | value |
@@ -18,3 +18,12 @@ Feature: POST Echo Endpoint Performance Tests
       | foo2 | bar2  |
     Then the response status code should be 200
     And the response time should be under 5000 milliseconds
+
+    When I send a POST request to "/post" with form data:
+      | key  | value |
+      | foo1 | bar1  |
+      | foo2 | bar2  |
+    Then the response should be a JSON object
+    And the response JSON should contain key "form"
+    And the response JSON should contain key "headers"
+    And the response JSON should contain key "url"

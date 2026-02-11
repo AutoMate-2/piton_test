@@ -20,3 +20,5 @@ Feature: POST Echo Endpoint Form Data Contract Tests
     And the JSON key "form" should be of type "object"
     And the JSON key "form.foo1" should equal "bar1"
     And the JSON key "form.foo2" should equal "bar2"
+
+    

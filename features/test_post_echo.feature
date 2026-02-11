@@ -18,3 +18,4 @@ Feature: POST Echo Endpoint Contract Tests
       | foo2 | bar2  |
     Then the response status code should be 200
     And the response should match the POST echo JSON schema
+
