@@ -1,0 +1,79 @@
+@api @get_echo
+Feature: GET Echo Endpoint Contract Tests # features/test_response.feature:2
+  As a QA engineer
+  I want to validate the GET /get echo endpoint
+  So that I can ensure the API contract remains stable
+  @api @get_echo
+  Feature: GET Echo Endpoint Contract Tests  # features/test_response.feature:2
+
+  @smoke @positive
+  Scenario: Verify successful response status and content type      # features/test_response.feature:14
+    Given the API base URL is configured                            # features/steps/test_response_steps.py:16
+    When I send a GET request to "/get" with query parameters:      # features/steps/test_response_steps.py:25
+      | key  | value |
+      | foo1 | bar1  |
+      | foo2 | bar2  |
+    Then the response status code should be 200                     # features/steps/test_response_steps.py:56
+    And the response Content-Type should contain "application/json" # features/steps/test_response_steps.py:64
+
+  @contract @positive
+  Scenario: Verify response body contains required contract keys  # features/test_response.feature:26
+    Given the API base URL is configured                          # features/steps/test_response_steps.py:16
+    When I send a GET request to "/get" with query parameters:    # features/steps/test_response_steps.py:25
+      | key  | value |
+      | foo1 | bar1  |
+      | foo2 | bar2  |
+    Then the response should be a JSON object                     # features/steps/test_response_steps.py:77
+    And the response JSON should contain key "args"               # features/steps/test_response_steps.py:82
+    And the response JSON should contain key "headers"            # features/steps/test_response_steps.py:82
+    And the response JSON should contain key "url"                # features/steps/test_response_steps.py:82
+
+  @contract @positive
+  Scenario: Verify query parameters are echoed in the args object  # features/test_response.feature:40
+    Given the API base URL is configured                           # features/steps/test_response_steps.py:16
+    When I send a GET request to "/get" with query parameters:     # features/steps/test_response_steps.py:25
+      | key  | value |
+      | foo1 | bar1  |
+      | foo2 | bar2  |
+    Then the response status code should be 200                    # features/steps/test_response_steps.py:56
+    And the JSON key "args.foo1" should equal "bar1"               # features/steps/test_response_steps.py:87
+    And the JSON key "args.foo2" should equal "bar2"               # features/steps/test_response_steps.py:87
+
+  @contract @schema
+  Scenario: Verify response matches the expected JSON schema   # features/test_response.feature:53
+    Given the API base URL is configured                       # features/steps/test_response_steps.py:16
+    When I send a GET request to "/get" with query parameters: # features/steps/test_response_steps.py:25
+      | key  | value |
+      | foo1 | bar1  |
+      | foo2 | bar2  |
+    Then the response status code should be 200                # features/steps/test_response_steps.py:56
+    And the response should match the GET echo JSON schema     # features/steps/test_response_steps.py:100
+
+  @performance @positive
+  Scenario: Verify response time is within acceptable limits   # features/test_response.feature:65
+    Given the API base URL is configured                       # features/steps/test_response_steps.py:16
+    When I send a GET request to "/get" with query parameters: # features/steps/test_response_steps.py:25
+      | key  | value |
+      | foo1 | bar1  |
+      | foo2 | bar2  |
+    Then the response status code should be 200                # features/steps/test_response_steps.py:56
+    And the response time should be under 5000 milliseconds    # features/steps/test_response_steps.py:108
+
+  @contract @headers
+  Scenario: Verify response includes standard HTTP headers     # features/test_response.feature:77
+    Given the API base URL is configured                       # features/steps/test_response_steps.py:16
+    When I send a GET request to "/get" with query parameters: # features/steps/test_response_steps.py:25
+      | key  | value |
+      | foo1 | bar1  |
+    Then the response status code should be 200                # features/steps/test_response_steps.py:56
+    And the response should have header "Date"                 # features/steps/test_response_steps.py:69
+    And the response should have header "Content-Type"         # features/steps/test_response_steps.py:69
+
+  @edge @positive
+  Scenario: Verify GET request works with no query parameters    # features/test_response.feature:89
+    Given the API base URL is configured                         # features/steps/test_response_steps.py:16
+    When I send a GET request to "/get" without query parameters # features/steps/test_response_steps.py:40
+    Then the response status code should be 200                  # features/steps/test_response_steps.py:56
+    And the response should be a JSON object                     # features/steps/test_response_steps.py:77
+    And the JSON key "args" should be an empty object            # features/steps/test_response_steps.py:92
+

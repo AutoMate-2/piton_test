@@ -1,0 +1,10 @@
+base_url: "https://postman-echo.com"
+
+endpoints:
+  get_echo: "/get"
+
+default_timeout: 30
+
+logging:
+  level: "INFO"
+  format: "%(asctime)s | %(levelname)-8s | %(name)s | %(message)s"
