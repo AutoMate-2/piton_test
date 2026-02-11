@@ -11,3 +11,14 @@ GET_ECHO_SCHEMA = {
     },
     "additionalProperties": True,
 }
+
+POST_ECHO_SCHEMA = {
+    "type": "object",
+    "required": ["form", "headers", "url"],
+    "properties": {
+        "form": {"type": "object"},
+        "headers": {"type": "object"},
+        "url": {"type": "string", "format": "uri"},
+    },
+    "additionalProperties": True,
+}

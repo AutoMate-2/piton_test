@@ -7,7 +7,7 @@ use_step_matcher("parse")
 from core.config import Config
 from core.request_builder import RequestBuilder
 from core.response_validator import ResponseValidator
-from utils.schema_validator import GET_ECHO_SCHEMA
+from utils.schema_validator import GET_ECHO_SCHEMA, POST_ECHO_SCHEMA
 
 
 # ── Given ───────────────────────────────────────────────────
